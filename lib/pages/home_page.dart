@@ -42,57 +42,61 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: const Color(0xff2A2D32),
           elevation: 0,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              "assets/icons/nube.png",
-              height: 80,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "27",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: screenHeigth * 0.15,
+        body: isLoading == true && ciudad == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/icons/nube.png",
+                    height: 80,
                   ),
-                ),
-                Column(
-                  children: [
-                    Text(
-                      " °C",
-                      style: TextStyle(
-                        color: Colors.white54,
-                        fontSize: 20,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        ciudad!.current.tempC.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: screenHeigth * 0.15,
+                        ),
                       ),
+                      Column(
+                        children: [
+                          Text(
+                            " °C",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                  Text(
+                    "${ciudad!.location.name}, UK",
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
-                    SizedBox(
-                      height: 40,
-                    )
-                  ],
-                )
-              ],
-            ),
-            Text(
-              "${ciudad!.location.name}, UK",
-              style: TextStyle(
-                color: Colors.white,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      // getWeatherData();
+                    },
+                    child: Text("DEBUG"),
+                  )
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // getWeatherData();
-              },
-              child: Text("DEBUG"),
-            )
-          ],
-        ),
       ),
     );
   }
