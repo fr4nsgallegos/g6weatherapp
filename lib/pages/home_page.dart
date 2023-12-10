@@ -1,16 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:g6weatherapp/models/weather_model.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget {
   getWeatherData() async {
     Uri url = Uri.parse(
-        "http://api.weatherapi.com/v1/current.json?key=70866d7ade244a3c9ca20142230509&q=lima&aqi=no");
+        "http://api.weatherapi.com/v1/current.json?key=70866d7ade244a3c9ca20142230509&q=cusco&aqi=no");
     http.Response response = await http.get(url);
     print(response.statusCode);
-
-    print(jsonDecode(response.body)["location"]["name"]);
+    Map<String, dynamic> data = json.decode(response.body);
+    WeatherModel weatherModel = weatherModelFromJson(response.body);
+    print(weatherModel.current.condition.icon);
   }
 
   @override
@@ -69,10 +71,11 @@ class HomePage extends StatelessWidget {
               height: 24,
             ),
             ElevatedButton(
-                onPressed: () {
-                  getWeatherData();
-                },
-                child: Text("DEBUG"))
+              onPressed: () {
+                getWeatherData();
+              },
+              child: Text("DEBUG"),
+            )
           ],
         ),
       ),
