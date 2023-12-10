@@ -1,6 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatelessWidget {
+  getWeatherData() async {
+    Uri url = Uri.parse(
+        "http://api.weatherapi.com/v1/current.json?key=70866d7ade244a3c9ca20142230509&q=lima&aqi=no");
+    http.Response response = await http.get(url);
+    print(response.statusCode);
+
+    print(jsonDecode(response.body)["location"]["name"]);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeigth = MediaQuery.of(context).size.height;
@@ -56,6 +68,11 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
+            ElevatedButton(
+                onPressed: () {
+                  getWeatherData();
+                },
+                child: Text("DEBUG"))
           ],
         ),
       ),
