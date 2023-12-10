@@ -2,17 +2,32 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:g6weatherapp/models/weather_model.dart';
+import 'package:g6weatherapp/services/api_services.dart';
 import 'package:http/http.dart' as http;
 
-class HomePage extends StatelessWidget {
-  getWeatherData() async {
-    Uri url = Uri.parse(
-        "http://api.weatherapi.com/v1/current.json?key=70866d7ade244a3c9ca20142230509&q=cusco&aqi=no");
-    http.Response response = await http.get(url);
-    print(response.statusCode);
-    Map<String, dynamic> data = json.decode(response.body);
-    WeatherModel weatherModel = weatherModelFromJson(response.body);
-    print(weatherModel.current.condition.icon);
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  WeatherModel? ciudad;
+  bool isLoading = true;
+  getDataLocation() async {
+    ApiServices apiServices = ApiServices();
+    ciudad = await apiServices.getWeatherData();
+    if (ciudad != null) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDataLocation();
   }
 
   @override
@@ -62,7 +77,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
             Text(
-              "LONGON, UK",
+              "${ciudad!.location.name}, UK",
               style: TextStyle(
                 color: Colors.white,
               ),
@@ -72,7 +87,7 @@ class HomePage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                getWeatherData();
+                // getWeatherData();
               },
               child: Text("DEBUG"),
             )
