@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:g6weatherapp/models/weather_forecast_model.dart';
 import 'package:g6weatherapp/models/weather_model.dart';
 import 'package:g6weatherapp/services/api_services.dart';
 import 'package:geolocator/geolocator.dart';
@@ -13,7 +14,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   WeatherModel? ciudad;
+  WeatherForecastModel? forecastModel;
   bool isLoading = true;
+  TextEditingController _cityController = TextEditingController();
 
   getDataLocation() async {
     ApiServices apiServices = ApiServices();
@@ -38,6 +41,25 @@ class _HomePageState extends State<HomePage> {
         position.latitude, position.longitude);
 
     if (ciudad != null) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> getCurrentForecast() async {
+    ApiServices apiServices = ApiServices();
+    isLoading = true;
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print("LATITUD: ${position.latitude}");
+    print("LONGITUD: ${position.longitude}");
+
+    forecastModel = await apiServices.getCurrentForecast(
+        position.latitude, position.longitude);
+
+    if (forecastModel != null) {
       setState(() {
         isLoading = false;
       });
@@ -103,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   Text(
-                    "${ciudad!.location.name}, UK",
+                    "${ciudad!.location.name}, ${ciudad!.location.country}",
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -111,12 +133,40 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 24,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      controller: _cityController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        hintText: "Ingrese la ciudad",
+                        hintStyle: TextStyle(color: Colors.white),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       // getPosition();
                       // getWeatherData();
                     },
-                    child: Text("DEBUG"),
+                    child: Text(
+                      "Buscar",
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
                   )
                 ],
               ),
