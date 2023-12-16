@@ -168,7 +168,44 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                     ),
-                  )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 4,
+                          offset: Offset(4, 8),
+                        )
+                      ],
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          "1 AM",
+                          style: TextStyle(color: Colors.white60, fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Icon(
+                          Icons.cloud_outlined,
+                          size: 60,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "18 °C",
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
       ),
