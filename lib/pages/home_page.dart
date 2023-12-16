@@ -90,6 +90,14 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           backgroundColor: const Color(0xff2A2D32),
           elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                getCurrentForecast();
+              },
+              icon: Icon(Icons.location_on_outlined),
+            )
+          ],
         ),
         body: isLoading == true && ciudad == null
             ? Center(
