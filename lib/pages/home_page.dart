@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   WeatherModel? ciudad;
   bool isLoading = true;
+
   getDataLocation() async {
     ApiServices apiServices = ApiServices();
     ciudad = await apiServices.getWeatherData();
@@ -24,18 +25,31 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  getPosition() async {
+  Future<void> getCurrentWeather() async {
+    ApiServices apiServices = ApiServices();
+    isLoading = true;
+
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     print("LATITUD: ${position.latitude}");
     print("LONGITUD: ${position.longitude}");
+
+    ciudad = await apiServices.getCurrentWeather(
+        position.latitude, position.longitude);
+
+    if (ciudad != null) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getDataLocation();
+    // getDataLocation();
+    getCurrentWeather();
   }
 
   @override
@@ -99,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      getPosition();
+                      // getPosition();
                       // getWeatherData();
                     },
                     child: Text("DEBUG"),
