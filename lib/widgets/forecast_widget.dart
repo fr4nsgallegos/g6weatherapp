@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ForecastWidget extends StatelessWidget {
   String hour;
   String temp;
+  int isDay;
 
   ForecastWidget({
     required this.hour,
     required this.temp,
+    required this.isDay,
   });
 
   @override
@@ -28,14 +30,14 @@ class ForecastWidget extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "$hour AM",
+            "$hour h.",
             style: TextStyle(color: Colors.white60, fontSize: 15),
           ),
           SizedBox(
             height: 8,
           ),
           Icon(
-            Icons.cloud_outlined,
+            isDay == 1 ? Icons.wb_sunny_outlined : Icons.cloud_outlined,
             size: 60,
             color: Colors.white,
           ),

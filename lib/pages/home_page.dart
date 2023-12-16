@@ -60,6 +60,9 @@ class _HomePageState extends State<HomePage> {
     ciudad = await apiServices.getCurrentForecast(
         position.latitude, position.longitude);
 
+    print(
+      ciudad!.forecast.forecastday[0].hour[0],
+    );
     if (ciudad != null) {
       setState(() {
         isLoading = false;
@@ -170,21 +173,42 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                        ForecastWidget(hour: "10", temp: "15"),
-                      ],
+                  SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: ciudad!.forecast.forecastday[0].hour.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ForecastWidget(
+                          hour: ciudad!.forecast.forecastday[0].hour[index].time
+                              .substring(11, 16),
+                          temp: ciudad!
+                              .forecast.forecastday[0].hour[index].tempC
+                              .toString(),
+                          isDay:
+                              ciudad!.forecast.forecastday[0].hour[index].isDay,
+                        );
+                      },
                     ),
-                  )
+                  ),
+                  // SizedBox(
+                  //   height: 200,
+                  //   child: SingleChildScrollView(
+                  //     scrollDirection: Axis.horizontal,
+                  //     child: Row(
+                  //       children: [
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //         ForecastWidget(hour: "10", temp: "15"),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
       ),
