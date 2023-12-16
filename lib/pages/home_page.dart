@@ -70,6 +70,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> getDataCityForecast(String cityName) async {
+    ApiServices apiServices = ApiServices();
+    isLoading = true;
+    ciudad = await apiServices.getForecastCity(cityName);
+    if (ciudad != null) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -171,6 +182,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         // getPosition();
                         // getWeatherData();
+                        getDataCityForecast(_cityController.text);
                       },
                       child: Text(
                         "Buscar",
