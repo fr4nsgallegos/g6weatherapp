@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:g6weatherapp/models/weather_model.dart';
 import 'package:g6weatherapp/services/api_services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,13 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
       });
     }
+  }
+
+  getPosition() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print("LATITUD: ${position.latitude}");
+    print("LONGITUD: ${position.longitude}");
   }
 
   @override
@@ -91,6 +99,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      getPosition();
                       // getWeatherData();
                     },
                     child: Text("DEBUG"),
