@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:g6weatherapp/models/weather_forecast_model.dart';
 import 'package:g6weatherapp/models/weather_model.dart';
 import 'package:g6weatherapp/services/api_services.dart';
+import 'package:g6weatherapp/widgets/forecast_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
@@ -169,43 +170,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 4,
-                          offset: Offset(4, 8),
-                        )
-                      ],
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Column(
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
                       children: [
-                        Text(
-                          "1 AM",
-                          style: TextStyle(color: Colors.white60, fontSize: 20),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Icon(
-                          Icons.cloud_outlined,
-                          size: 60,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "18 °C",
-                          style: TextStyle(color: Colors.white, fontSize: 25),
-                        )
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
+                        ForecastWidget(hour: "10", temp: "15"),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
       ),
