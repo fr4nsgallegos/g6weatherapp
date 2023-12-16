@@ -71,13 +71,26 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getDataCityForecast(String cityName) async {
+    WeatherForecastModel? ciudadTemp;
     ApiServices apiServices = ApiServices();
     isLoading = true;
-    ciudad = await apiServices.getForecastCity(cityName);
-    if (ciudad != null) {
+    ciudadTemp = await apiServices.getForecastCity(cityName);
+    if (ciudadTemp != null) {
       setState(() {
+        ciudad = ciudadTemp;
         isLoading = false;
       });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          content: Text("Hubo un inconveniente, intenta con otra ciudad"),
+        ),
+      );
     }
   }
 
