@@ -13,39 +13,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  WeatherModel? ciudad;
-  WeatherForecastModel? forecastModel;
+  WeatherForecastModel? ciudad;
+  // WeatherModel? ciudad;
   bool isLoading = true;
   TextEditingController _cityController = TextEditingController();
 
-  getDataLocation() async {
-    ApiServices apiServices = ApiServices();
-    ciudad = await apiServices.getWeatherData();
-    if (ciudad != null) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  // getDataLocation() async {
+  //   ApiServices apiServices = ApiServices();
+  //   ciudad = await apiServices.getWeatherData();
+  //   if (ciudad != null) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
-  Future<void> getCurrentWeather() async {
-    ApiServices apiServices = ApiServices();
-    isLoading = true;
+  // Future<void> getCurrentWeather() async {
+  //   ApiServices apiServices = ApiServices();
+  //   isLoading = true;
 
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print("LATITUD: ${position.latitude}");
-    print("LONGITUD: ${position.longitude}");
+  //   Position position = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high);
+  //   print("LATITUD: ${position.latitude}");
+  //   print("LONGITUD: ${position.longitude}");
 
-    ciudad = await apiServices.getCurrentWeather(
-        position.latitude, position.longitude);
+  //   ciudad = await apiServices.getCurrentWeather(
+  //       position.latitude, position.longitude);
 
-    if (ciudad != null) {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  //   if (ciudad != null) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
   Future<void> getCurrentForecast() async {
     ApiServices apiServices = ApiServices();
@@ -56,10 +56,10 @@ class _HomePageState extends State<HomePage> {
     print("LATITUD: ${position.latitude}");
     print("LONGITUD: ${position.longitude}");
 
-    forecastModel = await apiServices.getCurrentForecast(
+    ciudad = await apiServices.getCurrentForecast(
         position.latitude, position.longitude);
 
-    if (forecastModel != null) {
+    if (ciudad != null) {
       setState(() {
         isLoading = false;
       });
@@ -71,7 +71,8 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     // getDataLocation();
-    getCurrentWeather();
+    // getCurrentWeather();
+    getCurrentForecast();
   }
 
   @override

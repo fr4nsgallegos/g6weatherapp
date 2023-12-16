@@ -35,26 +35,26 @@ class Current {
   int lastUpdatedEpoch;
   String lastUpdated;
   double tempC;
-  int tempF;
+  double tempF;
   int isDay;
   Condition condition;
   double windMph;
   double windKph;
   int windDegree;
-  WindDir windDir;
-  int pressureMb;
+  String windDir;
+  double pressureMb;
   double pressureIn;
-  int precipMm;
-  int precipIn;
+  double precipMm;
+  double precipIn;
   int humidity;
   int cloud;
   double feelslikeC;
-  int feelslikeF;
-  int visKm;
-  int visMiles;
-  int uv;
-  int gustMph;
-  int gustKph;
+  double feelslikeF;
+  double visKm;
+  double visMiles;
+  double uv;
+  double gustMph;
+  double gustKph;
 
   Current({
     required this.lastUpdatedEpoch,
@@ -92,7 +92,7 @@ class Current {
         windMph: json["wind_mph"]?.toDouble(),
         windKph: json["wind_kph"]?.toDouble(),
         windDegree: json["wind_degree"],
-        windDir: windDirValues.map[json["wind_dir"]]!,
+        windDir: json["wind_dir"],
         pressureMb: json["pressure_mb"],
         pressureIn: json["pressure_in"]?.toDouble(),
         precipMm: json["precip_mm"],
@@ -259,26 +259,26 @@ class Astro {
 }
 
 class Day {
-  int maxtempC;
+  double maxtempC;
   double maxtempF;
   double mintempC;
   double mintempF;
   double avgtempC;
   double avgtempF;
   double maxwindMph;
-  int maxwindKph;
+  double maxwindKph;
   double totalprecipMm;
-  int totalprecipIn;
-  int totalsnowCm;
-  int avgvisKm;
-  int avgvisMiles;
-  int avghumidity;
+  double totalprecipIn;
+  double totalsnowCm;
+  double avgvisKm;
+  double avgvisMiles;
+  double avghumidity;
   int dailyWillItRain;
   int dailyChanceOfRain;
   int dailyWillItSnow;
   int dailyChanceOfSnow;
   Condition condition;
-  int uv;
+  double uv;
 
   Day({
     required this.maxtempC,
@@ -360,11 +360,11 @@ class Hour {
   double windMph;
   double windKph;
   int windDegree;
-  WindDir windDir;
-  int pressureMb;
+  String windDir;
+  double pressureMb;
   double pressureIn;
   double precipMm;
-  int precipIn;
+  double precipIn;
   int humidity;
   int cloud;
   double feelslikeC;
@@ -379,11 +379,11 @@ class Hour {
   int chanceOfRain;
   int willItSnow;
   int chanceOfSnow;
-  int visKm;
-  int visMiles;
+  double visKm;
+  double visMiles;
   double gustMph;
   double gustKph;
-  int uv;
+  double uv;
 
   Hour({
     required this.timeEpoch,
@@ -431,7 +431,7 @@ class Hour {
         windMph: json["wind_mph"]?.toDouble(),
         windKph: json["wind_kph"]?.toDouble(),
         windDegree: json["wind_degree"],
-        windDir: windDirValues.map[json["wind_dir"]]!,
+        windDir: json["wind_dir"],
         pressureMb: json["pressure_mb"],
         pressureIn: json["pressure_in"]?.toDouble(),
         precipMm: json["precip_mm"]?.toDouble(),
